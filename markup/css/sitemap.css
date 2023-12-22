@@ -1,0 +1,107 @@
+:root {
+  --clr-def-white: rgb(255 255 255);
+  --clr-def-black: rgb(0 0 0);
+  --clr-black-tl-025: rgb(0 0 0 / 0.25);
+  --clr-black-tl-050: rgb(0 0 0 / 0.5);
+  --clr-black-tl-075: rgb(0 0 0 / 0.75);
+}
+
+/* ============================================= Sitemap ============================================= */
+
+.sitemap code {
+  display: inline-flex;
+  align-items: center;
+  margin: 0;
+  padding: 0.25rem 0.5rem;
+  font-family: monospace;
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--clr-def-black);
+  background-color: var(--clr-black-tl-025);
+  border-radius: 0.5rem;
+}
+
+.sitemap__title-box {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.25rem;
+  margin: 2rem 0;
+  padding: 0;
+}
+
+.sitemap__title {
+  margin: 0;
+  padding: 0;
+  font-size: 3.2rem;
+}
+
+.sitemap__title-desc {
+  margin: 0;
+  padding: 0;
+}
+
+
+/* ============================================= Sitemap-Nav ============================================= */
+
+.sitemap-nav__table {
+  font-family: monospace;
+  font-size: 1.25rem;
+  background-color: var(--clr-def-white);
+  border-collapse: collapse;
+  border: 1px solid var(--clr-black-tl-025);
+}
+
+.sitemap-nav__table-head {
+  margin: 0;
+  padding: 0;
+  background-color: var(--clr-black-tl-050);
+}
+
+.sitemap-nav__table-head-th {
+  margin: 0;
+  padding: 1.2rem 0;
+  text-shadow:
+    1px 1px var(--clr-def-black),
+    1px -1px var(--clr-def-black),
+    -1px 1px var(--clr-def-black),
+    -1px -1px var(--clr-def-black);
+  color: var(--clr-def-white);
+  border: 1px solid var(--clr-black-tl-075);
+}
+
+.sitemap-nav__table-row {
+  border: 1px solid var(--clr-def-black);
+}
+
+.sitemap-nav__table-row:not(:last-child),
+.sitemap-nav__table-row:not(:last-of-type) {
+  border-bottom: 2px solid var(--clr-def-black);
+}
+
+.sitemap-nav__table-td {
+  margin: 0;
+  padding: 0;
+  border: 1px solid var(--clr-def-black);
+}
+
+.sitemap-nav__link {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0.4rem 1.2rem;
+  text-decoration: none;
+  color: var(--clr-def-black);
+  transition-property: text-shadow, color, background-color;
+  transition-duration: 0.15s;
+  transition-timing-function: ease;
+}
+
+.sitemap-nav__link:where(:hover, :focus-visible) {
+  text-shadow:
+  1px 1px var(--clr-def-black),
+  1px -1px var(--clr-def-black),
+  -1px 1px var(--clr-def-black),
+  -1px -1px var(--clr-def-black);
+  color: var(--clr-def-white);
+  background-color: var(--clr-black-tl-025);
+}
