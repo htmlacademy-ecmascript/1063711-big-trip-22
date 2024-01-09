@@ -1,33 +1,57 @@
-import { createElement } from '../render';
+import {createElement} from '../render';
+import {humanizeDate, standardizeDate, hasEventOffers} from '../utils';
 
-function _createTemplate() {
+function createTripEventOffersTemplate(offers) {
+  return (
+    `${hasEventOffers(offers) ? `<h4 class="visually-hidden">Offers:</h4>
+      <ul class="event__selected-offers">
+        ${Object.values(offers).map((offer) => `
+          <li class="event__offer">
+            <span class="event__offer-title">${offer.name}</span>
+            +€&nbsp;
+            <span class="event__offer-price">${offer.cost}</span>
+          </li>
+        `).join('')}
+      </ul>` : ''}`
+  );
+}
+
+function _createTemplate(data) {
+  const {
+    date,
+    type,
+    travelTime,
+    offers,
+  } = data;
+
+  const humanDate = humanizeDate(date);
+  const standardDate = standardizeDate(date);
+  const ttStart = travelTime.start;
+  const ttEnd = travelTime.end;
+  const offersTemp = createTripEventOffersTemplate(offers);
+
   return `
     <li class="trip-events__item">
       <div class="event">
-        <time class="event__date" datetime="2019-03-18">MAR 18</time>
+        <time class="event__date" datetime="${standardDate}">${humanDate}</time>
         <div class="event__type">
-          <img class="event__type-icon" width="42" height="42" src="img/icons/taxi.png" alt="Event type icon">
+          <img class="event__type-icon" width="42" height="42" src="img/icons/${type}.png" alt="Event type icon">
         </div>
-        <h3 class="event__title">Taxi Amsterdam</h3>
+        <h3 class="event__title">${type}</h3>
         <div class="event__schedule">
           <p class="event__time">
-            <time class="event__start-time" datetime="2019-03-18T10:30">10:30</time>
+            <time class="event__start-time" datetime="${standardDate}T${ttStart}">${ttStart}</time>
             —
-            <time class="event__end-time" datetime="2019-03-18T11:00">11:00</time>
+            <time class="event__end-time" datetime="${standardDate}T${ttEnd}">${ttEnd}</time>
           </p>
-          <p class="event__duration">30M</p>
+          <p class="event__duration">???</p>
         </div>
         <p class="event__price">
           €&nbsp;<span class="event__price-value">20</span>
         </p>
-        <h4 class="visually-hidden">Offers:</h4>
-        <ul class="event__selected-offers">
-          <li class="event__offer">
-            <span class="event__offer-title">Order Uber</span>
-            +€&nbsp;
-            <span class="event__offer-price">20</span>
-          </li>
-        </ul>
+
+        ${offersTemp}
+
         <button class="event__favorite-btn event__favorite-btn--active" type="button">
           <span class="visually-hidden">Add to favorite</span>
           <svg class="event__favorite-icon" width="28" height="28" viewBox="0 0 28 28">
@@ -43,8 +67,12 @@ function _createTemplate() {
 }
 
 export default class TripEventView {
+  constructor({tripEvent}) {
+    this._tripEvent = tripEvent;
+  }
+
   getTemplate() {
-    return _createTemplate();
+    return _createTemplate(this._tripEvent);
   }
 
   getElement() {
