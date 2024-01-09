@@ -1,5 +1,5 @@
 // Utils
-import { render } from '../render';
+import {render} from '../render';
 
 // Views
 import TripEventsListView from '../view/trip-events-list-view';
@@ -11,19 +11,23 @@ import FormEditView from '../view/form-edit-view';
 export default class TripPresenter {
   _tripEventsListComponent = new TripEventsListView();
 
-  constructor ({tripContainer}) {
+  constructor ({tripContainer, tripEventModel, formEditModel}) {
     this._container = tripContainer;
+    this._teModel = tripEventModel;
+    this._feModel = formEditModel;
   }
 
   init() {
+    this.tripEvents = [...this._teModel.getTripEvents()];
+
     render(this._tripEventsListComponent, this._container);
     render(new SortView(), this._tripEventsListComponent.getElement());
-    render(new FormEditView(), this._tripEventsListComponent.getElement());
+    render(new FormCreateView(), this._tripEventsListComponent.getElement());
 
-    for (let i = 0; i < 3; i++) {
-      render(new TripEventView(), this._tripEventsListComponent.getElement());
+    for (let i = 0; i < this.tripEvents.length; i++) {
+      render(new TripEventView({tripEvent: this.tripEvents[i]}), this._tripEventsListComponent.getElement());
     }
 
-    render(new FormCreateView(), this._tripEventsListComponent.getElement());
+    render(new FormEditView({formEditData: this._feModel.getData()}), this._tripEventsListComponent.getElement());
   }
 }
